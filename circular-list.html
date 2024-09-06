@@ -19,7 +19,7 @@
     }
 
     .navbar-brand,
-    .nav-link,
+   
     .navbar-toggler-icon {
       color: white !important;
     }
@@ -55,16 +55,40 @@
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between px-5">
-    <a class="navbar-brand" href="Admin Dashboard.html"><img src="./assets/img/logo/logo.png" class="bg-light rounded" width="180px" alt="">logo</a>
+  <nav style="background-color:blue;" class="navbar navbar-expand-lg navbar-light justify-content-between">
+    <i class="mobile-nav-toggle d-xl-none bi bi-list d-none"></i>
+    <div style="background-color:blue ;" class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <img style="height: 60px;" class="img-fluid ms-5" src="./assets/img/bharath_academy_logo-removebg-preview.png" alt="">
 
-    <div class="dropdown">
-      <a href="#" id="profileDropdown" class="d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
-        <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg" height="30px" width="30px" alt="Profile" class="rounded-circle">
-      </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-        <li><a href="login.html" class="dropdown-item">Logout<i class="fa-solid fa-arrow-right-to-bracket px-2"></i></a></li>
-      </ul>
+      <div style="background-color: blue;" class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul style="" class="navbar-nav justify-content-around w-100">
+          <li  class="nav-item px-3 rounded">
+            <a style="color: white;" class="nav-link active" aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="courses.html">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="gallery.html">Bharath Academy</a>
+          </li>
+          <li style="border: 1px solid white; background-color: white;" class="nav-item px-3 rounded">
+            <a style="color: blue;" class="nav-link " href="./circular-list.html">Circular</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" target="_blank" class="nav-link " href="./Admin/login.html">Admin</a>
+          </li>
+         
+          <li class="nav-item ">
+            <a style="color: white;" class="nav-link" href="contact.html">Contact</a>
+          </li>        
+        </ul>
+      </div>
     </div>
   </nav>
   <!-- Navbar end -->
