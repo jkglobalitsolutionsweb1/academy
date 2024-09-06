@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List of Circulars - Gabriel Marriage Hall</title>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .navbar {
+      background-color: blue;
+    }
+
+    .navbar-brand,
+    .nav-link,
+    .navbar-toggler-icon {
+      color: white !important;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+    }
+
+    .container h2 {
+      color: blue;
+    }
+
+    .card {
+      margin-bottom: 20px;
+    }
+
+    .card img {
+      object-fit: cover;
+      height: 200px;
+    }
+
+    /* Custom modal styles */
+    .modal-dialog {
+      max-width: 80%;
+    }
+
+    .modal-body img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light d-flex justify-content-between px-5">
+    <a class="navbar-brand" href="Admin Dashboard.html"><img src="./assets/img/logo/logo.png" class="bg-light rounded" width="180px" alt="">logo</a>
+
+    <div class="dropdown">
+      <a href="#" id="profileDropdown" class="d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="https://static.vecteezy.com/system/resources/previews/002/318/271/original/user-profile-icon-free-vector.jpg" height="30px" width="30px" alt="Profile" class="rounded-circle">
+      </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+        <li><a href="login.html" class="dropdown-item">Logout<i class="fa-solid fa-arrow-right-to-bracket px-2"></i></a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Navbar end -->
+
+  <!-- Circulars List -->
+  <div class="container mt-5">
+    <h2 class="text-center">List of Circulars</h2>
+    <div id="circularsContainer" class="row">
+      <!-- Circular cards will be dynamically added here -->
+    </div>
+  </div>
+  <!-- Circulars List end -->
+
+  <!-- Modal for displaying full image -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Image</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="Full Image">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end -->
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+  <!-- Firebase Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmYa6Sa_4MQ_OVz--txVtpaNOamZSsswU",
+      authDomain: "bharath-academy-f4fa0.firebaseapp.com",
+      projectId: "bharath-academy-f4fa0",
+      storageBucket: "bharath-academy-f4fa0.appspot.com",
+      messagingSenderId: "456644111847",
+      appId: "1:456644111847:web:5891b6428c26532891e142",
+      measurementId: "G-PJ7W4LZ9SJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const circularsContainer = document.getElementById('circularsContainer');
+
+      try {
+        const querySnapshot = await getDocs(collection(firestore, 'circular'));
+        querySnapshot.forEach((doc) => {
+          const hotel = doc.data();
+          const card = document.createElement('div');
+          card.className = 'col-md-4';
+          card.innerHTML = `
+            <div class="card">
+              <img src="${hotel.imageUrl}" class="card-img-top" alt="${hotel.hotelName}" data-bs-toggle="modal" data-bs-target="#imageModal">
+              <div class="card-body">
+                <h5 class="card-title">${hotel.hotelName}</h5>
+                <p class="card-text">${hotel.content}</p>
+                <p class="card-text"><small class="text-muted">${hotel.date}</small></p>
+              </div>
+            </div>
+          `;
+          circularsContainer.appendChild(card);
+        });
+
+        // Event listener for modal image
+        const modalImage = document.getElementById('modalImage');
+        document.addEventListener('click', (event) => {
+          if (event.target.classList.contains('card-img-top')) {
+            modalImage.src = event.target.src;
+          }
+        });
+      } catch (error) {
+        console.error('Error loading circulars:', error);
+      }
+    });
+  </script>
+</body>
+
+</html>
