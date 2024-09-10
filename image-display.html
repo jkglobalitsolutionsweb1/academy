@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery</title>
+  <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Bharath Academy</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; }
+    .navbar { background-color: blue; }
+    .navbar-brand, .nav-link { color: white !important; }
+    .navbar-brand { font-weight: bold; }
+    .container h2 { color: blue; }
+    .btn-primary { background-color: blue; border-color: blue; }
+    .btn-primary:hover { background-color: darkblue; border-color: darkblue; }
+    .img-thumbnail { cursor: pointer; }
+    /* Custom Modal Styles */
+    .modal-dialog.modal-lg {
+      max-width: 60vw; /* Adjust the max-width as needed */
+    }
+    .modal-content {
+      border-radius: 0.5rem;
+    }
+    #modalImage {
+      width: 100%; /* Ensure the image fills the modal width */
+      height: auto; /* Maintain aspect ratio */
+    }
+  </style>
+  <!-- Firebase Configuration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDmYa6Sa_4MQ_OVz--txVtpaNOamZSsswU",
+      authDomain: "bharath-academy-f4fa0.firebaseapp.com",
+      projectId: "bharath-academy-f4fa0",
+      storageBucket: "bharath-academy-f4fa0.appspot.com",
+      messagingSenderId: "456644111847",
+      appId: "1:456644111847:web:5891b6428c26532891e142",
+      measurementId: "G-PJ7W4LZ9SJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const firestore = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const imageContainer = document.getElementById('imageContainer');
+      imageContainer.innerHTML = '';
+
+      try {
+        const querySnapshot = await getDocs(collection(firestore, 'BarathGalleryImage'));
+        querySnapshot.forEach((doc) => {
+          const hotel = doc.data();
+          const col = document.createElement('div');
+          col.className = 'col-md-4 mb-4';
+          col.innerHTML = `
+            <div class="card">
+              <img src="${hotel.imageUrl}" class="card-img-top img-thumbnail" data-bs-toggle="modal" data-bs-target="#imageModal" data-image="${hotel.imageUrl}" />
+              <div class="card-body">
+                <h5 class="card-title">${hotel.hotelName}</h5>
+              </div>
+            </div>
+          `;
+          imageContainer.appendChild(col);
+        });
+      } catch (error) {
+        console.error('Error loading images:', error);
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (event.target.classList.contains('img-thumbnail')) {
+        const imageUrl = event.target.getAttribute('data-image');
+        const modalImage = document.getElementById('modalImage');
+        modalImage.src = imageUrl;
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav style="background-color:blue;" class="navbar navbar-expand-lg navbar-light justify-content-between">
+    <i class="mobile-nav-toggle d-xl-none bi bi-list d-none"></i>
+    <div style="background-color:blue ;" class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <img style="height: 80px;" class="img-fluid ms-5" src="./assets/img/Bharath Academy Logo.png" alt="">
+
+
+      <div style="background-color: blue;" class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul style="" class="navbar-nav justify-content-around w-100">
+          <li  class="nav-item rounded">
+            <a style="color: blue;" class="nav-link " aria-current="page" href="index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="courses.html">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="gallery.html">Bharath Academy</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" class="nav-link " href="./circular-list.html">Circular</a>
+          </li>
+          <li style="background-color: white;" class="nav-item px-3 rounded">
+            <a style="color: blue !important;" class="nav-link " href="./image-display.html">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a style="color: white;" target="_blank" class="nav-link " href="./Admin/login.html">Admin</a>
+          </li>
+         
+          <li class="nav-item ">
+            <a style="color: white;" class="nav-link" href="contact.html">Contact</a>
+          </li>        
+        </ul>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Image Gallery -->
+  <div class="container mt-5">
+    <h2 class="text-center fw-bolder">Gallery</h2>
+    <div class="row" id="imageContainer"></div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Use modal-lg for larger modal -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Image Preview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="Large View" />
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer" class="footer position-relative light-background">
+
+    <div class="container footer-top">
+      <div class="row align-items-center ">
+     
+        
+        <div class="col-lg-4 justify-content-center text-center">
+          <img style="height: 150px;" class="img-fluid" src="./assets/img/Bharath Academy Logo.png" alt="">
+        </div>
+
+        <div class="col-lg-3 col-md-3 footer-links my-5 my-lg-0 text-center">
+          <ul>
+            <li class=""><a href="#">Home</a></li>
+            <li><a href="#">About </a></li>
+            <li><a href="#">Courses</a></li>
+            <li><a href="#">Bharath Academy</a></li>
+            <li><a href="#">Circular</a></li>
+            <li><a href="#">Gallery </a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+     
+
+        <div class="col-lg-5 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Bharath Academy</span>
+          </a>
+          <div class="footer-contact pt-3">
+       <p style="font-family: sans-serif;">Thiruvannamalai Pavalakundru Madalayam, Chinnakadai Street Pavalakundru Madam, Thiruvannamalai, Tiruvannamalai - 606603 (PAVALAKUNDRU MADAM)</p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Bharath Academy</strong> <span>All Rights Reserved</span></p>
+    
+    </div>
+
+  </footer>
+  
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
